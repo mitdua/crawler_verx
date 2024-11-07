@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>404 Not Found</title>  
+
+  <link href="{{url_for('static', path='/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet"> 
+ 
+</head>
+
+<body>
+  <main>
+    <div class="container">
+
+      <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1>404</h1>
+        <h2>A página que você procura não existe.</h2>
+        <a class="btn" href="/">Voltar para o home</a>
+        <img src="{{url_for('static', path='/img/not-found.svg')}}" class="img-fluid py-5" alt="Page Not Found">                
+        </div>
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+ 
+  <script src="{{url_for('static', path='/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static', path='/sweetalert2@11.js')}}"></script>
+  <script src="{{url_for('static', path='/main.js')}}"></script>
+
+</body>
+
+</html>

@@ -1,7 +1,8 @@
 import pytest
-from ..crawler import WebCrawler
 from selenium.webdriver.remote.webelement import WebElement
 from unittest.mock import MagicMock
+
+from app.crawler import WebCrawler
 
 @pytest.fixture
 def crawler():

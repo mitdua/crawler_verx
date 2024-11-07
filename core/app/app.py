@@ -8,14 +8,15 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse, HTMLResponse, Response, FileResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from crawler import get_data_by_region
+from app.crawler import get_data_by_region
 
 app = FastAPI(docs_url=None, redoc_url=None)
 
-static_dir = Path(f"{os.getcwd()}/static/")
+      
+static_dir = Path(f"{Path(__file__).resolve().parent.parent}/static/")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-template_dir = Path(f"{os.getcwd()}/template/")
+template_dir = Path(f"{Path(__file__).resolve().parent.parent}/template/")
 templates = Jinja2Templates(directory=template_dir)
 
 

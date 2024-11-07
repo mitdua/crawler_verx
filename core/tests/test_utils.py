@@ -1,6 +1,5 @@
-import pytest
-from ..crawler import generate_csv
-from ..schemas import Resposta
+from app.crawler import generate_csv
+from app.schemas import Resposta
 
 def test_generate_csv_valid_data():
     data = [{"Symbol": "AAPL", "Name": "Apple Inc.", "Price": "150.00"}]

@@ -11,6 +11,7 @@ Este projeto é um **crawler** desenvolvido em **Python** que utiliza **Selenium
 - [Uso](#uso)
 - [Docker](#docker)
 - [Testes](#testes)
+- [Screenshots](#screenshots)
 
 ## Características
 
@@ -98,3 +99,9 @@ Os testes unitários estão no diretório tests. Eles podem ser executados com p
     ```bash
     pytest tests/
     ```
+
+
+## Screenshots
+
+![App Screenshot](https://blackfix-ai.s3.sa-east-1.amazonaws.com/images_pdfs/sc1.png)
+

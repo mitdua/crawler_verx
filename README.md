@@ -41,7 +41,7 @@ Dependências do Python especificadas no `requirements.txt`:
 
    ```bash
    git clone git@github.com:mitdua/crawler_verx.git
-   cd web-crawler-financas
+   cd crawler_verx
    ```
 
 2. Crie um ambiente virtual e ative-o:
@@ -54,14 +54,13 @@ Dependências do Python especificadas no `requirements.txt`:
     pip install -r requirements.txt
 
     ```
+
 ## Variáveis
 
 Para executar este projeto, você precisará adicionar as seguintes variáveis ​​de ambiente ao seu arquivo .env,
 com o valor "1" para ocultar o navegador usado pelo rastreador, "0" para torná-lo visível
 
 `HIDDENCRAWLER`
-
-
 
 ## Uso
 
@@ -77,6 +76,7 @@ Execução Local
     ```bash
     http://localhost:8000
     ```
+
 ## Docker
 Você pode executar a aplicação usando Docker (recomendado):
 
@@ -99,7 +99,6 @@ Os testes unitários estão no diretório tests. Eles podem ser executados com p
     ```bash
     pytest tests/
     ```
-
 
 ## Screenshots
 

@@ -7,7 +7,9 @@ from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 
 from app.schemas import Resposta
@@ -18,6 +20,7 @@ region_default = "//*[@id='screener-criteria']/div[2]/div[1]/div[1]/div[1]/div/d
 button_add = (
     "//*[@id='screener-criteria']/div[2]/div[1]/div[1]/div[1]/div/div[2]/ul/li/button"
 )
+find_region = "//*[@id='dropdown-menu']/div/div[1]/div/input"
 find_stock = "//*[@id='screener-criteria']/div[2]/div[1]/div[3]/button[1]"
 table = "//*[@id='scr-res-table']/div[1]/table/tbody"
 next = "//*[@id='scr-res-table']/div[2]/button[3]"
@@ -33,6 +36,7 @@ if hidden_crawler and int(hidden_crawler) == 1:
     options.add_argument('--no-sandbox')
     options.add_argument('--remote-debugging-port=9222')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--window-size=1600,1000')
 
 class WebCrawler:
     """
@@ -60,7 +64,7 @@ class WebCrawler:
             Inicia o driver do Selenium com as configurações predefinidas.
         """
         self.driver = webdriver.Chrome(options=options)
-        self.driver.set_window_size(1000, 1000)
+        self.driver.set_window_size(1600, 1000)
 
     def load_page(self):
         """
@@ -88,11 +92,13 @@ class WebCrawler:
         for _ in range(10):
             element = None
             try:
-                element = self.driver.find_element(By.XPATH, xpath)
-                if element:
-                    break
+                element = WebDriverWait(self.driver, time).until(
+                    EC.presence_of_element_located((By.XPATH, xpath))
+                )
             except NoSuchElementException:
-                sleep(2)
+                continue
+            except TimeoutException:
+                continue
 
         if not element:
             raise Exception(f"Element with XPATH: {xpath} not found")
@@ -174,6 +180,8 @@ def get_data_by_region(region) -> Resposta:
         crawler.load_page()
         crawler.get_element_by_xpath(xpath=region_default, click=True)
         crawler.get_element_by_xpath(xpath=button_add, click=True)
+        find_region_input = crawler.get_element_by_xpath(xpath=find_region)
+        find_region_input.send_keys(region)
         crawler.get_element_by_xpath(
             xpath=f"//span[contains(text(), '{region}')]", click=True
         )
@@ -185,7 +193,7 @@ def get_data_by_region(region) -> Resposta:
             sleep(3)
             html = crawler.get_page_source()
             data.extend(crawler.parse_data(html=html))
-            next_button = crawler.get_element_by_xpath(xpath=next)
+            next_button = crawler.get_element_by_xpath(xpath=next, time=4)
             if crawler.element_is_disabled(element=next_button):
                 break
             next_button.click()
